@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block main %}
+    <h3 class="">HOME</h3>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <a class="col-2" href="{% url 'blog:home' %}"><p>トップ</p></a>
+            <a href="{% url 'admin:index' %}" class="col-2">管理画面へ</a>
+            <a href="{% url 'blog:new' %}" class="col-2">新規投稿</a>
+        </div>
+    </div>
+    <hr>
+<div class="container">
+    <div class="row">
+        <div>
+            <h4>カテゴリー</h4>
+            <!-- context.pyのオブジェクトを取得しています。（category_list）-->
+            {% for category in category_list %}
+            <a href="{% url 'blog:category' category.name %}">
+                <p>{{ category.name }}</p>
+            </a>
+            {% endfor %}
+        </div>
+        <br>
+    </div>
+</div>
+    <!-- 上記のfloatスタイルの影響を受けないようにしている。（clear）-->
+    <h1>一覧</h1>
+    <br>
+<!-- <h1>なぜかカテゴリー一覧が表示されない</h1> -->
+
+    {% if category_key %}
+        <h3>カテゴリー：{{ category_key }}</h3>
+    {% else %}
+    <h3>カテゴリ選択で指定できます</h3>
+    {% endif %}
+
+
+    {% for item in object_list %} 
+    <div class="container">
+        <div class="row">            
+            <h5 class="">title</h5>
+            <p>{{ item.title }}</p>
+            <h5>content</h5>
+            <p>{{ item.text }}</p>
+        </div>
+        <a href="{% url 'blog:detail' item.pk %}">詳細</a>
+    </div>
+    <hr>
+    {% endfor %}
+{% endblock main %}

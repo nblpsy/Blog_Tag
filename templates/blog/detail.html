@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>詳細画面</h1>
+<div class="container">
+    <div class="row">            
+        <hr>
+        <h3>{{ blog.title }}</h3>
+        <h5>content</h5>
+        <p> {{ blog.text }}</p>
+        <p>{{ blog.created_at }}</p>
+        <hr>
+    </div>
+</div>
+
+<div class="container">
+    <h2>コメント</h2>
+    <p>ここのfor comment in blog.comment_set.all()</p>
+    <p>は1対多の時に取得するために使う</p>
+    {% for comment in blog.comment_set.all %}
+    
+    <hr>
+    <div class="comment-text">
+        
+        <p>{{ comment.text }}</p>
+    </div>
+    {% endfor %}
+</div>
+<hr>
+
+<div class="container">
+    <h3>新規コメント</h3>
+<form action="{% url 'blog:comment_create' blog.pk%}" method="post">
+    {% csrf_token %}
+    {{ comment_form }}
+    <div>
+        <button type="submit">送信</button>
+    </div>
+</form>
+
+
+<a href="{% url 'blog:home' %}" class="pt-3">homeに戻る</a>
+</div>
+
+{% endblock main %}
